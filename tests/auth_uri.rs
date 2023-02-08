@@ -7,7 +7,7 @@ use inth_oauth2::provider::*;
 use url::Url;
 
 fn assert_get_uri_ok(uri: Url) {
-    let response = reqwest::get(uri).unwrap();
+    let response = reqwest::blocking::get(uri).unwrap();
     assert_eq!(reqwest::StatusCode::OK, response.status());
 }
 

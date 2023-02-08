@@ -110,7 +110,7 @@ impl<P: Provider> Client<P> {
 
     fn post_token(
         &self,
-        http_client: &reqwest::Client,
+        http_client: &reqwest::blocking::Client,
         mut body: Serializer<String>,
     ) -> Result<Value, ClientError> {
         if self.provider.credentials_in_body() {
@@ -144,7 +144,7 @@ impl<P: Provider> Client<P> {
     /// See [RFC 6749, section 4.1.3](http://tools.ietf.org/html/rfc6749#section-4.1.3).
     pub fn request_token(
         &self,
-        http_client: &reqwest::Client,
+        http_client: &reqwest::blocking::Client,
         code: &str,
     ) -> Result<P::Token, ClientError> {
         let mut body = Serializer::new(String::new());
@@ -167,7 +167,7 @@ impl<P> Client<P> where P: Provider, P::Token: Token<Refresh> {
     /// See [RFC 6749, section 6](http://tools.ietf.org/html/rfc6749#section-6).
     pub fn refresh_token(
         &self,
-        http_client: &reqwest::Client,
+        http_client: &reqwest::blocking::Client,
         token: P::Token,
         scope: Option<&str>,
     ) -> Result<P::Token, ClientError> {
@@ -187,7 +187,7 @@ impl<P> Client<P> where P: Provider, P::Token: Token<Refresh> {
     /// Ensures an access token is valid by refreshing it if necessary.
     pub fn ensure_token(
         &self,
-        http_client: &reqwest::Client,
+        http_client: &reqwest::blocking::Client,
         token: P::Token,
     ) -> Result<P::Token, ClientError> {
         if token.lifetime().expired() {

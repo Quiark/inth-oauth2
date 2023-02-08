@@ -44,18 +44,8 @@ impl fmt::Display for ClientError {
 }
 
 impl Error for ClientError {
-    fn description(&self) -> &str {
-        match *self {
-            ClientError::Io(ref err) => err.description(),
-            ClientError::Url(ref err) => err.description(),
-            ClientError::Reqwest(ref err) => err.description(),
-            ClientError::Json(ref err) => err.description(),
-            ClientError::Parse(ref err) => err.description(),
-            ClientError::OAuth2(ref err) => err.description(),
-        }
-    }
 
-    fn cause(&self) -> Option<&Error> {
+    fn cause(&self) -> Option<&dyn Error> {
         match *self {
             ClientError::Io(ref err) => Some(err),
             ClientError::Url(ref err) => Some(err),

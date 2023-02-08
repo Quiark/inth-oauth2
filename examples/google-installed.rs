@@ -7,7 +7,7 @@ use inth_oauth2::Client;
 use inth_oauth2::provider::google::{Installed, REDIRECT_URI_OOB};
 
 fn main() {
-    let http_client = reqwest::Client::new();
+    let http_client = reqwest::blocking::Client::new();
 
     let client = Client::new(
         Installed,
